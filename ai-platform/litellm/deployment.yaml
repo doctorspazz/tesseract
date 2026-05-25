@@ -37,6 +37,18 @@ spec:
                   key: database-url
             - name: STORE_MODEL_IN_DB
               value: "True"
+            - name: LANGFUSE_PUBLIC_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: litellm-secrets
+                  key: langfuse-public-key
+            - name: LANGFUSE_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: litellm-secrets
+                  key: langfuse-secret-key
+            - name: LANGFUSE_HOST
+              value: "http://ai-langfuse-web.ai-platform.svc.cluster.local:3000"
           volumeMounts:
             - name: config
               mountPath: /app/config.yaml
