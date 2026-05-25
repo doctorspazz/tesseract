@@ -1,0 +1,39 @@
+ui:
+  enabled: true
+
+server:
+  standalone:
+    enabled: true
+    config: |
+      ui = true
+
+      listener "tcp" {
+        tls_disable = 1
+        address = "[::]:8200"
+        cluster_address = "[::]:8201"
+      }
+
+      storage "raft" {
+        path    = "/vault/data"
+        node_id = "vault-0"
+      }
+
+      service_registration "kubernetes" {}
+
+  dataStorage:
+    enabled: true
+    size: 5Gi
+    storageClass: local-path
+
+  ingress:
+    enabled: true
+    annotations:
+      cert-manager.io/cluster-issuer: tesseract-ca-issuer
+    hosts:
+      - host: vault.home
+        paths:
+          - /
+    tls:
+      - hosts:
+          - vault.home
+        secretName: vault-tls
