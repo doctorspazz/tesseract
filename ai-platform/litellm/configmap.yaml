@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: litellm-config
+  namespace: ai-platform
+data:
+  config.yaml: |
+    model_list:
+      - model_name: gemma4:31b
+        litellm_params:
+          model: ollama/gemma4:31b
+          api_base: http://192.168.1.202:11434
+
+    general_settings:
+      store_model_in_db: true

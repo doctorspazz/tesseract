@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: litellm
+  namespace: ai-platform
+  annotations:
+    cert-manager.io/cluster-issuer: tesseract-ca-issuer
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: litellm.home
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: litellm
+                port:
+                  number: 4000
+  tls:
+    - hosts:
+        - litellm.home
+      secretName: litellm-tls
