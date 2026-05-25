@@ -12,6 +12,7 @@ spec:
       chart: altinity-clickhouse-operator
       targetRevision: "0.27.0"
       helm:
+        releaseName: clickhouse-op
         valueFiles:
           - $values/data/clickhouse-operator/values.yaml
     - repoURL: https://github.com/doctorspazz/tesseract.git
