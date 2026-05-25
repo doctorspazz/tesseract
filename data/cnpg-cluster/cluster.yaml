@@ -1,0 +1,25 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: postgres
+  namespace: data
+spec:
+  instances: 1
+
+  postgresql:
+    parameters:
+      max_connections: "200"
+
+  superuserSecret:
+    name: postgres-superuser-credentials
+
+  bootstrap:
+    initdb:
+      database: app
+      owner: app
+      secret:
+        name: postgres-app-credentials
+
+  storage:
+    storageClass: local-path
+    size: 20Gi

@@ -1,0 +1,31 @@
+apiVersion: clickhouse.altinity.com/v1
+kind: ClickHouseInstallation
+metadata:
+  name: clickhouse
+  namespace: data
+spec:
+  configuration:
+    users:
+      default/k8s_secret_password: data/clickhouse-credentials/password
+      default/networks/ip: "0.0.0.0/0"
+    clusters:
+      - name: default
+        layout:
+          shardsCount: 1
+          replicasCount: 1
+  templates:
+    volumeClaimTemplates:
+      - name: clickhouse-storage
+        spec:
+          storageClassName: local-path
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: 20Gi
+    podTemplates:
+      - name: default
+        spec:
+          containers:
+            - name: clickhouse
+              image: clickhouse/clickhouse-server:24.12

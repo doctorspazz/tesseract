@@ -1,0 +1,29 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: data-clickhouse-operator
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "5"
+spec:
+  project: default
+  sources:
+    - repoURL: https://docs.altinity.com/clickhouse-operator/
+      chart: altinity-clickhouse-operator
+      targetRevision: "0.27.0"
+      helm:
+        valueFiles:
+          - $values/data/clickhouse-operator/values.yaml
+    - repoURL: https://github.com/doctorspazz/tesseract.git
+      targetRevision: HEAD
+      ref: values
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: clickhouse-system
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true

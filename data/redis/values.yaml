@@ -1,0 +1,15 @@
+architecture: standalone
+
+auth:
+  enabled: true
+  existingSecret: redis-credentials
+  existingSecretPasswordKey: redis-password
+
+master:
+  persistence:
+    enabled: true
+    storageClass: local-path
+    size: 5Gi
+
+replica:
+  replicaCount: 0
