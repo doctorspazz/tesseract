@@ -1,0 +1,31 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: create-langfuse-bucket
+  namespace: ai-platform
+spec:
+  template:
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: mc
+          image: minio/mc:latest
+          command:
+            - /bin/sh
+            - -c
+            - |
+              mc alias set minio http://minio-hl.data.svc.cluster.local:9000 \
+                $MINIO_USER $MINIO_PASSWORD --api S3v4
+              mc mb --ignore-existing minio/langfuse
+              echo "Done"
+          env:
+            - name: MINIO_USER
+              valueFrom:
+                secretKeyRef:
+                  name: minio-client-credentials
+                  key: root-user
+            - name: MINIO_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: minio-client-credentials
+                  key: root-password

@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: n8n
+  namespace: ai-platform
+  annotations:
+    cert-manager.io/cluster-issuer: tesseract-ca-issuer
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: n8n.home
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: n8n
+                port:
+                  number: 5678
+  tls:
+    - hosts:
+        - n8n.home
+      secretName: n8n-tls

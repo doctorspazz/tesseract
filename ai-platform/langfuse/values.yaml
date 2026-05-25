@@ -1,0 +1,74 @@
+langfuse:
+  salt:
+    secretKeyRef:
+      name: langfuse-secrets
+      key: salt
+
+  encryptionKey:
+    secretKeyRef:
+      name: langfuse-secrets
+      key: encryption-key
+
+  nextauth:
+    url: https://langfuse.home
+    secret:
+      secretKeyRef:
+        name: langfuse-secrets
+        key: nextauth-secret
+
+  ingress:
+    enabled: true
+    className: traefik
+    annotations:
+      cert-manager.io/cluster-issuer: tesseract-ca-issuer
+    hosts:
+      - host: langfuse.home
+        paths:
+          - path: /
+            pathType: Prefix
+    tls:
+      enabled: true
+      secretName: langfuse-tls
+
+postgresql:
+  deploy: false
+  host: postgres-rw.data.svc.cluster.local
+  auth:
+    username: app
+    database: langfuse
+    existingSecret: langfuse-secrets
+    secretKeys:
+      userPasswordKey: pg-password
+      adminPasswordKey: pg-password
+
+redis:
+  deploy: false
+  host: data-redis-master.data.svc.cluster.local
+  auth:
+    username: "default"
+    existingSecret: langfuse-secrets
+    existingSecretPasswordKey: redis-password
+
+clickhouse:
+  deploy: false
+  host: clickhouse-clickhouse.data.svc.cluster.local
+  clusterEnabled: false
+  auth:
+    username: default
+    existingSecret: langfuse-secrets
+    existingSecretKey: ch-password
+
+s3:
+  deploy: false
+  bucket: langfuse
+  region: us-east-1
+  endpoint: http://minio-hl.data.svc.cluster.local:9000
+  forcePathStyle: true
+  accessKeyId:
+    secretKeyRef:
+      name: langfuse-secrets
+      key: minio-access-key
+  secretAccessKey:
+    secretKeyRef:
+      name: langfuse-secrets
+      key: minio-secret-key
