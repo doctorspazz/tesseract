@@ -1,0 +1,33 @@
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Database
+metadata:
+  name: litellm-db
+  namespace: data
+spec:
+  name: litellm
+  cluster:
+    name: postgres
+  owner: app
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Database
+metadata:
+  name: langfuse-db
+  namespace: data
+spec:
+  name: langfuse
+  cluster:
+    name: postgres
+  owner: app
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Database
+metadata:
+  name: n8n-db
+  namespace: data
+spec:
+  name: n8n
+  cluster:
+    name: postgres
+  owner: app
