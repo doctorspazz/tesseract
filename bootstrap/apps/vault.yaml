@@ -20,6 +20,15 @@ spec:
   destination:
     server: https://kubernetes.default.svc
     namespace: vault
+  
+  #https://discuss.hashicorp.com/t/instaling-vault-through-argocd-workflow-agent-injector-cant-be-synced/32375 
+  ignoreDifferences:
+    - group: admissionregistration.k8s.io
+      kind: MutatingWebhookConfiguration
+      name: vault-agent-injector-cfg
+      jsonPointers:
+        - /webhooks/0/clientConfig/caBundle
+
   syncPolicy:
     automated:
       prune: true
