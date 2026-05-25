@@ -7,20 +7,13 @@ metadata:
     argocd.argoproj.io/sync-wave: "5"
 spec:
   project: default
-  sources:
-    - repoURL: https://docs.altinity.com/clickhouse-operator/
-      chart: altinity-clickhouse-operator
-      targetRevision: "0.27.0"
-      helm:
-        releaseName: clickhouse-op
-        valueFiles:
-          - $values/data/clickhouse-operator/values.yaml
-    - repoURL: https://github.com/doctorspazz/tesseract.git
-      targetRevision: HEAD
-      ref: values
+  source:
+    repoURL: https://github.com/doctorspazz/tesseract.git
+    targetRevision: HEAD
+    path: data/clickhouse-operator-bundle
   destination:
     server: https://kubernetes.default.svc
-    namespace: clickhouse-system
+    namespace: kube-system
   syncPolicy:
     automated:
       prune: true
