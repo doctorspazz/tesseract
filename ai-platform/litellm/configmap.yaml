@@ -13,5 +13,7 @@ data:
 
     general_settings:
       store_model_in_db: true
-      success_callback: ["langfuse"]
-      failure_callback: ["langfuse"]        
+      success_callback:
+        - langfuse
+      failure_callback:
+        - langfuse       

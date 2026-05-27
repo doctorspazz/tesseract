@@ -49,6 +49,8 @@ spec:
                   key: langfuse-secret-key
             - name: LANGFUSE_HOST
               value: "http://ai-langfuse-web.ai-platform.svc.cluster.local:3000"
+            - name: LITELLM_LOG
+              value: "DEBUG"
           volumeMounts:
             - name: config
               mountPath: /app/config.yaml
