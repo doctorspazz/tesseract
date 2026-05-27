@@ -5,7 +5,6 @@ metadata:
   namespace: argocd
   annotations:
     cert-manager.io/cluster-issuer: tesseract-ca-issuer
-    traefik.ingress.kubernetes.io/router.middlewares: argocd-argocd-https@kubernetescrd
 spec:
   ingressClassName: traefik
   rules:
