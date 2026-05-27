@@ -15,12 +15,6 @@ ports:
     expose:
       default: true
 
-ingressRoute:
-  dashboard:
-    enabled: true
-    matchRule: Host(`traefik.home`)
-    entryPoints: ["web"]
-
 api:
   dashboard: true
   insecure: true
