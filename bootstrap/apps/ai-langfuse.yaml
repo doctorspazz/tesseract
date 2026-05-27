@@ -6,7 +6,7 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "8"
 spec:
-  project: default
+  project: ai
   sources:
     - repoURL: https://langfuse.github.io/langfuse-k8s
       chart: langfuse
